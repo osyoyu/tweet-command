@@ -75,7 +75,9 @@ tokenfile.each_with_index {|line, c|
 
 # read status from STDIN
 status = gets.chomp!.force_encoding("UTF-8")
-status[140 .. status.size] = "" 
+if status.size >= 140
+	status[140 .. status.size] = "" 
+end
 
 # send to Twitter
 param_string = "oauth_consumer_key=#{consumer_key}&oauth_nonce=#{nonce}&oauth_signature_method=HMAC-SHA1&oauth_timestamp=#{timestamp}&oauth_token=#{token[1]}&oauth_version=1.0&status=#{CGI.escape(status).gsub("+", "%20")}"
